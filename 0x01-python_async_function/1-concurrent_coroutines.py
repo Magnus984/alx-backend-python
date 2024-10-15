@@ -3,16 +3,19 @@
 Executing multiple coroutines at a time.
 """
 import asyncio
-wait_random = __import__('0-basic_async_syntax').wait_random
+from typing import List, Callable
 
 
-async def wait_n(n: int, max_delay: int) -> list:
+wait_random: Callable = __import__('0-basic_async_syntax').wait_random
+
+
+async def wait_n(n: int, max_delay: int) -> List[float]:
     """
     Gets delay for tasks processing asynchronously
     and returns a sorted list of the delays
     """
     delays = await asyncio.gather(*(wait_random(max_delay) for _ in range(n)))
-    result = []
+    result: List[float] = []
     for delay in delays:
         inserted = False
         for i in range(len(result)):
